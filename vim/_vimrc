@@ -1,0 +1,183 @@
+"********************************************************
+" Author: David
+" Version: 1.0
+" Email: wding.cn@gmail.com
+" Create: 2015-10-23
+" Last-modify: 2015-10-24
+" Sections:
+"			-> Get Settings
+"           -> Genernal Settings
+"           -> Display Settings
+"           -> Shotkey Settings
+"********************************************************
+
+
+
+"********************************************************
+" Get Settings
+"********************************************************
+" Checking Operation System
+if (has('win32') || has('win64'))
+	let g:isWIN = 1
+	let g:isMAC = 0
+else
+	if system('uname') =~ 'Darwin'
+		let g:isWIN = 0
+		let g:isMAC = 1
+	else
+		let g:isWIN = 0
+		let g:isMAC = 0
+	endif
+endif
+
+" Checking is GUI
+if has('gui_running')
+	let g:isGUI = 1
+else
+	let g:isGUI = 0
+endif
+
+
+
+"********************************************************
+" General Settings
+"********************************************************
+filetype indent on
+set backspace=2		"enable backspace
+set autoindent
+set smartindent
+set shiftwidth=4
+set tabstop=4
+set nocompatible
+filetype plugin on
+runtime macros/matchit.vim
+
+
+
+"********************************************************
+" Display Settings
+"********************************************************
+" set color scheme and font
+if g:isWIN
+	colorscheme molokai
+	set guifont=PragmataPro:h11
+elseif g:isMAC
+	colorscheme molokai
+	set guifont=PragmataPro:h14
+else
+	colorscheme molokai
+	set guifont=PragmataPro\ 11
+endif
+
+
+syntax enable
+syntax on
+set number
+set ruler
+set showcmd
+set showmode
+set scrolloff=7
+
+set nowrap
+set showmatch
+set matchtime=2
+set expandtab
+set incsearch
+set hlsearch
+set cursorline
+hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white
+hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white
+
+" 使用GUI界面时的设置
+if g:isGUI
+    " 启动时自动最大化窗口
+    if g:isWIN
+        au GUIEnter * simalt ~x
+    endif
+    "winpos 20 20            " 指定窗口出现的位置，坐标原点在屏幕左上角
+    "set lines=20 columns=90 " 指定窗口大小，lines为高度，columns为宽度
+    set guioptions+=c        " 使用字符提示框
+    set guioptions-=m        " 隐藏菜单栏
+    set guioptions-=T        " 隐藏工具栏
+    set guioptions-=L        " 隐藏左侧滚动条
+    set guioptions-=r        " 隐藏右侧滚动条
+    set guioptions-=b        " 隐藏底部滚动条
+    set showtabline=0        " 隐藏Tab栏
+    set cursorline           " 高亮突出当前行
+    " set cursorcolumn       " 高亮突出当前列
+endif
+
+"********************************************************
+" Shotkey Settings
+"********************************************************
+map <Left> <Nop>
+map <Right> <Nop>
+map <Up> <Nop>
+map <Down> <Nop>
+
+
+noremap <F1> <Esc>
+nmap <F1> <Esc>
+vmap <F1> <Esc>
+cmap <F1> <Esc>
+imap <F1> <Esc>
+
+if g:isWIN
+	vmap <C-q> <C-v>
+endif
+
+
+function! HideNumber()
+    if(&number == 0 && &relativenumber == 0)
+        set number
+    elseif(&number == 1 && &relativenumber == 0)
+        set relativenumber
+    else
+        set nonumber norelativenumber
+    endif
+endfunc
+nnoremap <F2> :call HideNumber()<CR>
+
+nnoremap oo o<Esc>		" 插入空行
+
+
+"********* 引号 & 括号 自动匹配 ****************************
+:inoremap ( ()<esc>i
+:inoremap ) <c-r>=ClosePair(')')<cr>
+:inoremap { {}<esc>i
+:inoremap } <c-r>=ClosePair('}')<cr>
+:inoremap [ []<esc>i
+:inoremap ] <c-r>=ClosePair(']')<cr>
+:inoremap " ""<esc>i
+:inoremap ' ''<esc>i
+:inoremap ` ``<esc>i
+au FileType scheme,racket,newlisp,lisp,clojure :inoremap ' '
+au FileType scheme,racket,newlisp,lisp,clojure :inoremap ` `
+au FileType scheme,racket,newlisp,lisp,clojure :inoremap * **<esc>i
+au FileType css,scss,less :inoremap : : ;<esc>i
+
+function ClosePair(char)
+    if getline('.')[col('.') - 1] == a:char
+        return '\<Right>'
+    else
+        return a:char
+    endif
+endf
+
+
+
+"********* 自定义快捷键 ************************************
+" \c 复制到系统剪贴板
+vmap <leader>c "+y
+nmap <leader>c "+y
+
+" \rb 一键去除所有尾部空白
+imap <silent> <leader>rb <esc>:let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<cr>
+nmap <silent> <leader>rb :let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<cr>
+vmap <silent> <leader>rb <esc>:let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<cr>
+
+" <C-l> 刷新并清除查询高亮"
+nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
+
+" \fc 显示查询内容匹配项个数
+nnoremap <leader>fc :<C-u>%s///gn<CR>
