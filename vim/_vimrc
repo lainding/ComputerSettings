@@ -143,11 +143,11 @@ nnoremap oo o<Esc>		" 插入空行
 
 "********* 引号 & 括号 自动匹配 ****************************
 :inoremap ( ()<esc>i
-:inoremap ) <c-r>=ClosePair(')')<cr>
+":inoremap ) <c-r>=ClosePair(')')<cr>
 :inoremap { {}<esc>i
-:inoremap } <c-r>=ClosePair('}')<cr>
+":inoremap } <c-r>=ClosePair('}')<cr>
 :inoremap [ []<esc>i
-:inoremap ] <c-r>=ClosePair(']')<cr>
+":inoremap ] <c-r>=ClosePair(']')<cr>
 :inoremap " ""<esc>i
 :inoremap ' ''<esc>i
 :inoremap ` ``<esc>i
@@ -172,9 +172,12 @@ vmap <leader>c "+y
 nmap <leader>c "+y
 
 " \rb 一键去除所有尾部空白
-imap <silent> <leader>rb <esc>:let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<cr>
-nmap <silent> <leader>rb :let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<cr>
-vmap <silent> <leader>rb <esc>:let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<cr>
+"imap <silent> <leader>rb <esc>:let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<cr>
+"nmap <silent> <leader>rb :let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<cr>
+"vmap <silent> <leader>rb <esc>:let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<cr>
+imap <leader>rb <esc>:let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<cr>
+nmap <leader>rb :let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<cr>
+vmap <leader>rb <esc>:let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<cr>
 
 " <C-l> 刷新并清除查询高亮"
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
