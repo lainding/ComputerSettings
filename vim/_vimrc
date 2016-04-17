@@ -49,10 +49,21 @@ set smartindent
 set shiftwidth=4
 set tabstop=4
 set nocompatible
-set encoding=utf-8
 filetype plugin on
 runtime macros/matchit.vim
 
+
+""
+set encoding=utf-8
+set fileencodings=utf-8,gbk2312,gbk,gb18030,cp936
+set termencoding=utf-8
+set fileencoding=utf-8
+set imcmdline
+
+if g:isWIN
+    set termencoding=chinese
+    language message zh_CN.UTF-8
+endif
 
 
 "********************************************************
