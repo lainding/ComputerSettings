@@ -49,11 +49,12 @@ set smartindent
 set shiftwidth=4
 set tabstop=4
 set nocompatible
+set hidden
 filetype plugin on
 runtime macros/matchit.vim
 
 
-""
+"*********************** Encoding *************************"
 set encoding=utf-8
 set fileencodings=utf-8,gbk2312,gbk,gb18030,cp936
 set termencoding=utf-8
@@ -114,7 +115,7 @@ if g:isGUI
     set guioptions-=L        " 隐藏左侧滚动条
     set guioptions-=r        " 隐藏右侧滚动条
     set guioptions-=b        " 隐藏底部滚动条
-    set showtabline=0        " 隐藏Tab栏
+    "set showtabline=0        " 隐藏Tab栏
     set cursorline           " 高亮突出当前行
     " set cursorcolumn       " 高亮突出当前列
 endif
@@ -177,6 +178,8 @@ function ClosePair(char)
 endf
 
 
+cnoremap <expr> %% getcmdtype( ) == ':' ? expand('%:h').'/' : '%%'
+
 
 "********* 自定义快捷键 ************************************
 " \c 复制到系统剪贴板
@@ -196,3 +199,10 @@ nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
 " \fc 显示查询内容匹配项个数
 nnoremap <leader>fc :<C-u>%s///gn<CR>
+
+
+"************************ multi-file operation shot-key mapping **************************"
+nnoremap <silent> [b :bprevious<CR>
+nnoremap <silent> ]b :bnext<CR>
+nnoremap <silent> [B :bfirst<CR>
+nnoremap <silent> ]B :blast<CR>
