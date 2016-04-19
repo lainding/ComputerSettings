@@ -1,105 +1,89 @@
-"********************************************************
+"------------------------------------------------------------
 " Author: David
 " Version: 1.0
 " Email: wding.cn@gmail.com
 " Create: 2015-10-23
-" Last-modify: 2015-10-24
-" Sections:
-"			-> Get Settings
-"           -> Genernal Settings
-"           -> Display Settings
-"           -> Shotkey Settings
-"********************************************************
+" Last modify: 
+" Description:
+"------------------------------------------------------------
 
 
 
-"********************************************************
-" Get Settings
-"********************************************************
-" Checking Operation System
+"-------------------Ctrl系快捷键--------------------"
+"
+" Ctrl + H                   --光标移当前行行首       [插入模式]
+" Ctrl + J                   --光标移下一行行首       [插入模式]
+" Ctrl + K                   --光标移上一行行尾       [插入模式]
+" Ctrl + L                   --光标移当前行行尾       [插入模式]
+"
+"
+"
+"
+"-------------------Leader系快捷键-------------------"
+" 
+" \nt                       --打开NERDTree文件树窗口
+" \dt                       --插入当前日期
+
+" 判断操作系统类型
 if (has('win32') || has('win64'))
-	let g:isWIN = 1
-	let g:isMAC = 0
+    let g:isWIN = 1
+    let g:isMAC = 0
 else
-	if system('uname') =~ 'Darwin'
-		let g:isWIN = 0
-		let g:isMAC = 1
-	else
-		let g:isWIN = 0
-		let g:isMAC = 0
-	endif
+    if system('uname') =~ 'Darwin'
+        let g:isWIN = 0
+        let g:isMAC = 1
+    else
+        let g:isWIN = 0
+        let g:isMAC = 0
+    endif
 endif
 
-" Checking is GUI
+" 判断是否是GUI界面
 if has('gui_running')
-	let g:isGUI = 1
+    let g:isGUI = 1
 else
-	let g:isGUI = 0
+    let g:isGUI = 0
 endif
 
-
-
-"********************************************************
-" General Settings
-"********************************************************
-filetype indent on
-set backspace=2		"enable backspace
-set autoindent
-set smartindent
+" 设置通用缩进策略
 set shiftwidth=4
 set tabstop=4
-set nocompatible
-set hidden
-filetype plugin on
-runtime macros/matchit.vim
 
 
-"*********************** Encoding *************************"
-set encoding=utf-8
-set fileencodings=utf-8,gbk2312,gbk,gb18030,cp936
-set termencoding=utf-8
-set fileencoding=utf-8
-set imcmdline
-
+" 设置着色模式和字体
 if g:isWIN
-    set termencoding=chinese
-    language message zh_CN.UTF-8
-endif
-
-
-"********************************************************
-" Display Settings
-"********************************************************
-" set color scheme and font
-if g:isWIN
-	colorscheme molokai
-	set guifont=PragmataPro:h11
+    colorscheme molokai
+    set guifont=PragmataPro:h11
 elseif g:isMAC
-	colorscheme molokai
-	set guifont=PragmataPro:h14
+    colorscheme molokai
+    set guifont=PragmataPro:h14
 else
-	colorscheme molokai
-	set guifont=PragmataPro\ 11
+    colorscheme molokai
+    set guifont=PragmataPro\ 11
 endif
 
 
-syntax enable
-syntax on
-set number
-set ruler
-set showcmd
-set showmode
-set scrolloff=7
+" 设置文件类型
+filetype indent on          " 针对不同的文件类型采用不同缩进格式
+filetype plugin on          " 针对不同文件类型加载对应的插件
+syntax enable               " 打开语法高亮
+syntax on                   " 开启文件类型侦测
 
-set nowrap
-set showmatch
-set matchtime=2
-set expandtab
-set incsearch
-set hlsearch
-set cursorline
-hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white
-hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white
+
+" 设置文件编码和文件格式
+set fileencoding=utf-8
+set encoding=utf-8
+set fileencodings=utf-8,gbk2312,gbk,gb18030,cp936,latin-1
+set termencoding=utf-8
+set fileformat=unix
+set fileformats=unix,mac,dos
+if g:isWIN
+    source $VIMRUNTIME/delmenu.vim
+    source $VIMRUNTIME/menu.vim
+    language messages zh_CN.UTF-8
+endif
+
+
 
 " 使用GUI界面时的设置
 if g:isGUI
@@ -107,36 +91,48 @@ if g:isGUI
     if g:isWIN
         au GUIEnter * simalt ~x
     endif
-    "winpos 20 20            " 指定窗口出现的位置，坐标原点在屏幕左上角
-    "set lines=20 columns=90 " 指定窗口大小，lines为高度，columns为宽度
-    set guioptions+=c        " 使用字符提示框
-    set guioptions-=m        " 隐藏菜单栏
-    set guioptions-=T        " 隐藏工具栏
-    set guioptions-=L        " 隐藏左侧滚动条
-    set guioptions-=r        " 隐藏右侧滚动条
-    set guioptions-=b        " 隐藏底部滚动条
-    "set showtabline=0        " 隐藏Tab栏
-    set cursorline           " 高亮突出当前行
-    " set cursorcolumn       " 高亮突出当前列
+    "winpos 20 20               " 指定窗口出现的位置，坐标原点在屏幕左上角
+    "set lines=20 columns=90    " 指定窗口大小，lines为高度，columns为宽度
+    set guioptions+=c           " 使用字符提示框
+    set guioptions-=m           " 隐藏菜单栏
+    set guioptions-=T           " 隐藏工具栏
+    set guioptions-=L           " 隐藏左侧滚动条
+    set guioptions-=r           " 隐藏右侧滚动条
+    set guioptions-=b           " 隐藏底部滚动条
+    set showtabline=0          " 隐藏Tab栏
+    set cursorline              " 高亮突出当前行
+    "set cursorcolumn            " 高亮突出当前列
 endif
+
+
+
+set backspace=2		            " 设置退格键可用
+set autoindent                  " 自动对齐
+set smartindent                 " 只能自动缩进
+set nocompatible                " 关闭兼容模式
+set hidden                      " 允许在有未保存到修改时切换缓冲区
+set number                      " 显示行号
+set ruler                       " 右下角显示光标位置的状态行
+set showcmd                     " 
+set showmode
+set scrolloff=7
+set nowrap
+set showmatch                   " 显示括号配对情况
+set matchtime=2
+set expandtab                   " 将Tab键自动转换为空格
+set incsearch                   " 开启实时搜索功能
+set hlsearch                    " 开启高亮显示结果
+hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white
+hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white
+
+" 加载pathogen插件管理器
+execute pathogen#infect()
 
 "********************************************************
 " Shotkey Settings
 "********************************************************
-map <Left> <Nop>
-map <Right> <Nop>
-map <Up> <Nop>
-map <Down> <Nop>
-
-
-noremap <F1> <Esc>
-nmap <F1> <Esc>
-vmap <F1> <Esc>
-cmap <F1> <Esc>
-imap <F1> <Esc>
-
 if g:isWIN
-	vmap <C-q> <C-v>
+    vmap <C-q> <C-v>
 endif
 
 
@@ -149,42 +145,105 @@ function! HideNumber()
         set nonumber norelativenumber
     endif
 endfunc
-nnoremap <F2> :call HideNumber()<CR>
+nnoremap <F2> :call HideNumber()<cr>
 
-nnoremap oo o<Esc>		" 插入空行
+nnoremap oo o<esc>		" 插入空行
+
+" 在normal模式下禁用up, down, left, right
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+nnoremap <up> <nop>
+nnoremap <down> <nop>
 
 
-"********* 引号 & 括号 自动匹配 ****************************
-:inoremap ( ()<esc>i
-":inoremap ) <c-r>=ClosePair(')')<cr>
-:inoremap { {}<esc>i
-":inoremap } <c-r>=ClosePair('}')<cr>
-:inoremap [ []<esc>i
-":inoremap ] <c-r>=ClosePair(']')<cr>
-:inoremap " ""<esc>i
-:inoremap ' ''<esc>i
-:inoremap ` ``<esc>i
+"-------------------- 引号 & 括号 自动匹配 --------------------
+inoremap ( ()<esc>i
+inoremap { {<cr>}<esc>O
+inoremap [ []<esc>i
+inoremap ) <c-r>=ClosePair(')')<cr>
+inoremap ] <c-r>=ClosePair(']')<cr>
+inoremap } <c-r>=CloseBracket()<cr>
+inoremap " <c-r>=QuoteDelim('"')<cr>
+inoremap ' <c-r>=QuoteDelim("'")<cr>
+"inoremap ` ``<esc>i
 au FileType scheme,racket,newlisp,lisp,clojure :inoremap ' '
 au FileType scheme,racket,newlisp,lisp,clojure :inoremap ` `
 au FileType scheme,racket,newlisp,lisp,clojure :inoremap * **<esc>i
 au FileType css,scss,less :inoremap : : ;<esc>i
 
+function QuoteDelim(char)
+    let line = getline('.')
+    let col = col('.')
+    if line[col - 2] == "\\"
+    "Inserting a quoted quotation mark into the string
+        return a:char
+    elseif line[col - 1] == a:char
+    "Escaping out of the string
+        return "\<Right>"
+    else
+    "Starting a string
+        return a:char.a:char."\<Esc>i"
+    endif
+endf
+
+function CloseBracket()
+    if (match(getline(line('.') + 1), '\s*')) < 0
+        return "\<cr>}"
+    else
+        return "\<esc>j0f}a"
+    endif
+endf
+
 function ClosePair(char)
     if getline('.')[col('.') - 1] == a:char
-        return '\<Right>'
+        return "\<Right>"
     else
         return a:char
     endif
 endf
 
 
+" NERD_commenter      注释处理插件
+let NERDSpaceDelims = 1                        " 自动添加前置空格
+
+
+function InsertDate()
+    normal d$
+    normal A
+    execute '' 
+endfunc
+
+
 cnoremap <expr> %% getcmdtype( ) == ':' ? expand('%:h').'/' : '%%'
 
 
-"********* 自定义快捷键 ************************************
-" \c 复制到系统剪贴板
+" ====== 自定义快捷键 ====== "
+
+" \c                    复制到系统剪贴板
 vmap <leader>c "+y
 nmap <leader>c "+y
+
+" \v                    从公共剪贴板粘贴
+imap <leader>v <esc>"+p
+nmap <leader>v "+p
+vmap <leader>v "+p
+
+
+" Ctrl + H            光标移当前行行首[插入模式]、切换左窗口[Normal模式]
+imap <c-h> <esc>I
+map <c-h> <c-w><c-h>
+
+" Ctrl + J            光标移下一行行首[插入模式]、切换下窗口[Normal模式]
+imap <c-j> <esc>jI
+map <c-j> <c-w><c-j>
+
+" Ctrl + K            光标移上一行行尾[插入模式]、切换上窗口[Normal模式]
+imap <c-k> <esc>kA
+map <c-k> <c-w><c-k>
+
+" Ctrl + L            光标移当前行行尾[插入模式]、切换右窗口[Normal模式]
+imap <c-l> <esc>A
+map <c-l> <c-w><c-l>
 
 " \rb 一键去除所有尾部空白
 "imap <silent> <leader>rb <esc>:let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<cr>
@@ -206,3 +265,11 @@ nnoremap <silent> [b :bprevious<CR>
 nnoremap <silent> ]b :bnext<CR>
 nnoremap <silent> [B :bfirst<CR>
 nnoremap <silent> ]B :blast<CR>
+
+
+" \nt                   打开/关闭文件树窗口，在左侧栏显示 [NERDTree插件]
+nmap <leader>nt :NERDTree<cr>
+
+
+" \dt                   插入当前日期
+nmap <leader>dt :call InsertDate()<cr>
