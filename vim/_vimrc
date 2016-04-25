@@ -3,26 +3,44 @@
 " Version: 1.0
 " Email: wding.cn@gmail.com
 " Create: 2015-10-23
-" Last modify: 
-" Description:
+" Last modify: 2016-04-20
+" Description: 
 "------------------------------------------------------------
 
 
-
+"------------------自定义快捷键---------------------"
+"
+" jj                        --退出编辑模式进入普通模式  [插入模式] 
+"
 "-------------------Ctrl系快捷键--------------------"
 "
-" Ctrl + H                   --光标移当前行行首       [插入模式]
-" Ctrl + J                   --光标移下一行行首       [插入模式]
-" Ctrl + K                   --光标移上一行行尾       [插入模式]
-" Ctrl + L                   --光标移当前行行尾       [插入模式]
+" Ctrl + H                   --光标移当前行行首         [插入模式]
+" Ctrl + J                   --光标移下一行行首         [插入模式]
+" Ctrl + K                   --光标移上一行行尾         [插入模式]
+" Ctrl + L                   --光标移当前行行尾         [插入模式]
 "
 "
 "
 "
 "-------------------Leader系快捷键-------------------"
 " 
-" \nt                       --打开NERDTree文件树窗口
-" \dt                       --插入当前日期
+" ,nt                       --打开NERDTree文件树窗口
+" ,dt                       --在光标处插入当前日期      [Normal,插入模式]
+" ,cc                       --添加行注释                [NERD_commenter]
+" ,cm                       --添加块注释                [NERD_commenter]
+" ,cs                       --添加SexStyle块注释        [NERD_commenter]
+" ,cu                       --取消注释                  [NERD_commenter]
+" ,c                        --复制至公共剪贴板          [仅选择模式]
+" ,a                        --复制所有至公共剪贴板      [Normal模式可用]
+" ,v                        --从公共剪贴板粘贴          [全模式可用]
+
+
+
+
+
+
+
+
 
 " 判断操作系统类型
 if (has('win32') || has('win64'))
@@ -104,7 +122,8 @@ if g:isGUI
     "set cursorcolumn            " 高亮突出当前列
 endif
 
-
+" 设置 leader key 为,
+let mapleader = ","
 
 set backspace=2		            " 设置退格键可用
 set autoindent                  " 自动对齐
@@ -147,7 +166,6 @@ function! HideNumber()
 endfunc
 nnoremap <F2> :call HideNumber()<cr>
 
-nnoremap oo o<esc>		" 插入空行
 
 " 在normal模式下禁用up, down, left, right
 nnoremap <left> <nop>
@@ -165,11 +183,22 @@ inoremap ] <c-r>=ClosePair(']')<cr>
 inoremap } <c-r>=CloseBracket()<cr>
 inoremap " <c-r>=QuoteDelim('"')<cr>
 inoremap ' <c-r>=QuoteDelim("'")<cr>
-"inoremap ` ``<esc>i
+" inoremap ` <c-r>=QuoteDelim("`")<cr>
+vnoremap " xi""<esc>hp
+vnoremap ' xi''<esc>hp
+vnoremap ` xi``<esc>hp
+vnoremap ( xi()<esc>hp
+vnoremap ) xi()<esc>hp
+vnoremap [ xi[]<esc>hp
+vnoremap ] xi[]<esc>hp
+vnoremap } xi{}<esc>hp
+vnoremap { xi{}<esc>hp
+
 au FileType scheme,racket,newlisp,lisp,clojure :inoremap ' '
 au FileType scheme,racket,newlisp,lisp,clojure :inoremap ` `
 au FileType scheme,racket,newlisp,lisp,clojure :inoremap * **<esc>i
 au FileType css,scss,less :inoremap : : ;<esc>i
+
 
 function QuoteDelim(char)
     let line = getline('.')
@@ -207,23 +236,21 @@ endf
 let NERDSpaceDelims = 1                        " 自动添加前置空格
 
 
-function InsertDate()
-    normal d$
-    normal A
-    execute '' 
-endfunc
-
 
 cnoremap <expr> %% getcmdtype( ) == ':' ? expand('%:h').'/' : '%%'
 
 
+" 修改退到普通模式为jj
+imap jj <esc>
+
+
 " ====== 自定义快捷键 ====== "
 
-" \c                    复制到系统剪贴板
+" ,c                    复制到系统剪贴板
 vmap <leader>c "+y
 nmap <leader>c "+y
 
-" \v                    从公共剪贴板粘贴
+" ,v                    从公共剪贴板粘贴
 imap <leader>v <esc>"+p
 nmap <leader>v "+p
 vmap <leader>v "+p
@@ -253,11 +280,11 @@ imap <leader>rb <esc>:let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<cr>
 nmap <leader>rb :let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<cr>
 vmap <leader>rb <esc>:let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<cr>
 
-" <C-l> 刷新并清除查询高亮"
-nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
+" <c-l> 刷新并清除查询高亮"
+nnoremap <silent> <c-l> :<c-u>nohlsearch<cr><c-l>
 
 " \fc 显示查询内容匹配项个数
-nnoremap <leader>fc :<C-u>%s///gn<CR>
+nnoremap <leader>fc :<c-u>%s///gn<cr>
 
 
 "************************ multi-file operation shot-key mapping **************************"
@@ -272,4 +299,10 @@ nmap <leader>nt :NERDTree<cr>
 
 
 " \dt                   插入当前日期
-nmap <leader>dt :call InsertDate()<cr>
+nmap <leader>dt d$A<c-r>=strftime("%Y-%m-%d")<cr><esc>
+imap <leader>dt <esc>d$A<c-r>=strftime("%Y-%m-%d")<cr>
+
+
+" ,o                    插入空行
+nnoremap <leader>o o<esc>
+
