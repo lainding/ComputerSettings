@@ -3,7 +3,7 @@
 " Version: 1.0
 " Email: wding.cn@gmail.com
 " Create: 2015-10-23
-" Last modify: 2016-04-20
+" Last modify: 2016-04-26
 " Description: 
 "------------------------------------------------------------
 
@@ -31,16 +31,10 @@
 " ,cs                       --添加SexStyle块注释        [NERD_commenter]
 " ,cu                       --取消注释                  [NERD_commenter]
 " ,c                        --复制至公共剪贴板          [仅选择模式]
-" ,a                        --复制所有至公共剪贴板      [Normal模式可用]
 " ,v                        --从公共剪贴板粘贴          [全模式可用]
 
-
-
-
-
-
-
-
+" 不显示帮助乌干达信息
+" :set shortmess=atI
 
 " 判断操作系统类型
 if (has('win32') || has('win64'))
@@ -89,12 +83,12 @@ syntax on                   " 开启文件类型侦测
 
 
 " 设置文件编码和文件格式
-set fileencoding=utf-8
-set encoding=utf-8
-set fileencodings=utf-8,gbk2312,gbk,gb18030,cp936,latin-1
-set termencoding=utf-8
-set fileformat=unix
-set fileformats=unix,mac,dos
+:set fileencoding=utf-8
+:set encoding=utf-8
+:set fileencodings=utf-8,gbk2312,gbk,gb18030,cp936,latin-1
+:set termencoding=utf-8
+:set fileformat=unix
+:set fileformats=unix,mac,dos
 if g:isWIN
     source $VIMRUNTIME/delmenu.vim
     source $VIMRUNTIME/menu.vim
@@ -184,20 +178,20 @@ inoremap } <c-r>=CloseBracket()<cr>
 inoremap " <c-r>=QuoteDelim('"')<cr>
 inoremap ' <c-r>=QuoteDelim("'")<cr>
 " inoremap ` <c-r>=QuoteDelim("`")<cr>
-vnoremap " xi""<esc>hp
-vnoremap ' xi''<esc>hp
-vnoremap ` xi``<esc>hp
-vnoremap ( xi()<esc>hp
-vnoremap ) xi()<esc>hp
-vnoremap [ xi[]<esc>hp
-vnoremap ] xi[]<esc>hp
-vnoremap } xi{}<esc>hp
-vnoremap { xi{}<esc>hp
+vnoremap <leader>" xi""<esc>hp
+vnoremap <leader>' xi''<esc>hp
+vnoremap <leader>` xi``<esc>hp
+vnoremap <leader>( xi()<esc>hp
+vnoremap <leader>) xi()<esc>hp
+vnoremap <leader>[ xi[]<esc>hp
+vnoremap <leader>] xi[]<esc>hp
+vnoremap <leader>} xi{}<esc>hp
+vnoremap <leader>{ xi{}<esc>hp
 
-au FileType scheme,racket,newlisp,lisp,clojure :inoremap ' '
-au FileType scheme,racket,newlisp,lisp,clojure :inoremap ` `
-au FileType scheme,racket,newlisp,lisp,clojure :inoremap * **<esc>i
-au FileType css,scss,less :inoremap : : ;<esc>i
+" au FileType scheme,racket,newlisp,lisp,clojure :inoremap ' '
+" au FileType scheme,racket,newlisp,lisp,clojure :inoremap ` `
+" au FileType scheme,racket,newlisp,lisp,clojure :inoremap * **<esc>i
+" au FileType css,scss,less :inoremap : : ;<esc>i
 
 
 function QuoteDelim(char)
@@ -254,7 +248,6 @@ nmap <leader>c "+y
 imap <leader>v <esc>"+p
 nmap <leader>v "+p
 vmap <leader>v "+p
-
 
 " Ctrl + H            光标移当前行行首[插入模式]、切换左窗口[Normal模式]
 imap <c-h> <esc>I
