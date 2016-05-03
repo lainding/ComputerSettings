@@ -117,7 +117,7 @@ if g:isGUI
 endif
 
 " 设置 leader key 为,
-let mapleader = ","
+let mapleader=","
 
 set backspace=2		            " 设置退格键可用
 set autoindent                  " 自动对齐
