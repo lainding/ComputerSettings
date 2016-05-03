@@ -63,16 +63,16 @@ set tabstop=4
 
 
 " 设置着色模式和字体
+colorscheme molokai
 if g:isWIN
-    colorscheme molokai
     set guifont=PragmataPro:h11
+    " autocmd BufEnter *.md set guifont=Consolas:h12
 elseif g:isMAC
-    colorscheme molokai
     set guifont=PragmataPro:h14
-else
-    colorscheme molokai
+elseif g:isGUI
     set guifont=PragmataPro\ 11
 endif
+
 
 
 " 设置文件类型
