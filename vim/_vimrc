@@ -170,7 +170,7 @@ nnoremap <down> <nop>
 
 "-------------------- 引号 & 括号 自动匹配 --------------------
 inoremap ( ()<esc>i
-inoremap { {<cr>}<esc>O
+inoremap { {  }<esc>hi
 inoremap [ []<esc>i
 inoremap ) <c-r>=ClosePair(')')<cr>
 inoremap ] <c-r>=ClosePair(']')<cr>
