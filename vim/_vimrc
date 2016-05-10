@@ -178,21 +178,20 @@ inoremap } <c-r>=CloseBracket()<cr>
 inoremap " <c-r>=QuoteDelim('"')<cr>
 inoremap ' <c-r>=QuoteDelim("'")<cr>
 " inoremap ` <c-r>=QuoteDelim("`")<cr>
-vnoremap <leader>" xi""<esc>hp
-vnoremap <leader>' xi''<esc>hp
-vnoremap <leader>` xi``<esc>hp
-vnoremap <leader>( xi()<esc>hp
-vnoremap <leader>) xi()<esc>hp
-vnoremap <leader>[ xi[]<esc>hp
-vnoremap <leader>] xi[]<esc>hp
-vnoremap <leader>} xi{}<esc>hp
-vnoremap <leader>{ xi{}<esc>hp
+vnoremap <leader>" di"<esc>pa"
+vnoremap <leader>' di'<esc>pa'
+vnoremap <leader>` di`<esc>pa`
+vnoremap <leader>( di(<esc>pa)
+vnoremap <leader>) di(<esc>pa)
+vnoremap <leader>[ di[<esc>pa]
+vnoremap <leader>] di[<esc>pa]
+vnoremap <leader>} di{<esc>pa}
+vnoremap <leader>{ di{<esc>pa}
 
 " au FileType scheme,racket,newlisp,lisp,clojure :inoremap ' '
 " au FileType scheme,racket,newlisp,lisp,clojure :inoremap ` `
 " au FileType scheme,racket,newlisp,lisp,clojure :inoremap * **<esc>i
 " au FileType css,scss,less :inoremap : : ;<esc>i
-
 
 function QuoteDelim(char)
     let line = getline('.')
