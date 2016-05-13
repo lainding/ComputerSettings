@@ -11,6 +11,15 @@
 "------------------自定义快捷键---------------------"
 "
 " jj                        --退出编辑模式进入普通模式  [插入模式] 
+" ds                        --删除包围符号      [surround,Normal]
+" cs                        --修改包围符号      [surround,Normal]
+" cS                        --修改包围符号      [surround,Normal]
+" ys                        --增加包围符号      [surround,Normal]
+" yS                        --增加包围符号      [surround,Normal]
+" yss                       --增加包围符号      [surround,Normal]
+" ySs                       --增加包围符号      [surround,Normal]
+" ySS                       --增加包围符号      [surround,Normal]
+"
 "
 "-------------------Ctrl系快捷键--------------------"
 "
@@ -179,30 +188,10 @@ inoremap " <c-r>=QuoteDelim('"')<cr>
 inoremap ' <c-r>=QuoteDelim("'")<cr>
 " inoremap ` <c-r>=QuoteDelim("`")<cr>
 
-" vnoremap <leader>" di"<esc>pa"
-vnoremap <leader>" <c-u>:call QuoteContent('"')<cr>
-vnoremap <leader>' di'<esc>pa'
-vnoremap <leader>` di`<esc>pa`
-vnoremap <leader>( di(<esc>pa)
-vnoremap <leader>) di(<esc>pa)
-vnoremap <leader>[ di[<esc>pa]
-vnoremap <leader>] di[<esc>pa]
-vnoremap <leader>} di{<esc>pa}
-vnoremap <leader>{ di{<esc>pa}
-
 " au FileType scheme,racket,newlisp,lisp,clojure :inoremap ' '
 " au FileType scheme,racket,newlisp,lisp,clojure :inoremap ` `
 " au FileType scheme,racket,newlisp,lisp,clojure :inoremap * **<esc>i
 " au FileType css,scss,less :inoremap : : ;<esc>i
-
-function! QuoteContent(char)
-    let line = getline('.')
-    let col = col("'>")
-    echo "hll"
-    if char2nr(line[col]) == 0
-        'normal di"<esc>pa"'
-    endif
-endf
 
 function QuoteDelim(char)
     let line = getline('.')
