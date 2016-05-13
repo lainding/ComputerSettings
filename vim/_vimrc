@@ -178,7 +178,9 @@ inoremap } <c-r>=CloseBracket()<cr>
 inoremap " <c-r>=QuoteDelim('"')<cr>
 inoremap ' <c-r>=QuoteDelim("'")<cr>
 " inoremap ` <c-r>=QuoteDelim("`")<cr>
-vnoremap <leader>" di"<esc>pa"
+
+" vnoremap <leader>" di"<esc>pa"
+vnoremap <leader>" <c-u>:call QuoteContent('"')<cr>
 vnoremap <leader>' di'<esc>pa'
 vnoremap <leader>` di`<esc>pa`
 vnoremap <leader>( di(<esc>pa)
@@ -192,6 +194,15 @@ vnoremap <leader>{ di{<esc>pa}
 " au FileType scheme,racket,newlisp,lisp,clojure :inoremap ` `
 " au FileType scheme,racket,newlisp,lisp,clojure :inoremap * **<esc>i
 " au FileType css,scss,less :inoremap : : ;<esc>i
+
+function! QuoteContent(char)
+    let line = getline('.')
+    let col = col("'>")
+    echo "hll"
+    if char2nr(line[col]) == 0
+        'normal di"<esc>pa"'
+    endif
+endf
 
 function QuoteDelim(char)
     let line = getline('.')

@@ -12,3 +12,7 @@ rm vimfiles/bundle/nerdcommenter/.git/ -rf
 rm vimfiles/bundle/vim-markdown/ -rf
 git clone git@github.com:plasticboy/vim-markdown.git vimfiles/bundle/vim-markdown
 rm vimfiles/bundle/vim-markdown/.git/ -rf
+#update vim-surround
+rm vimfiles/bundle/vim-surround/ -rf
+git clone git@github.com:tpope/vim-surround.git vimfiles/bundle/vim-surround
+rm vimfiles/bundle/vim-surround/.git/ -rf
