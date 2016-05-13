@@ -16,3 +16,7 @@ rm vimfiles/bundle/vim-markdown/.git/ -rf
 rm vimfiles/bundle/vim-surround/ -rf
 git clone git@github.com:tpope/vim-surround.git vimfiles/bundle/vim-surround
 rm vimfiles/bundle/vim-surround/.git/ -rf
+#update vim-repeat
+rm vimfiles/bundle/vim-repeat/ -rf
+git clone git@github.com:tpope/vim-repeat.git vimfiles/bundle/vim-repeat
+rm vimfiles/bundle/vim-repeat/.git/ -rf
